@@ -139,8 +139,13 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 🔒 License
+
+This project is **not open source** and is licensed under an **All Rights Reserved** license.  
+No part of the source code may be copied, modified, reused, or distributed without express permission.
+
+For licensing requests, please contact: prabindumre@example.com
+
 
 ## 📩 Contact the Developers
 For further collaboration, usage rights, or technical discussions, kindly contact:
