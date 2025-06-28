@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FinNote</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Additional styling for progress rings */
+        .progress-ring-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+        }
+        
+        .progress-ring-circle-bg {
+            stroke: rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-text {
+            font-size: 16px;
+            font-weight: 700;
+            fill: #2c3e50;
+        }
+        
+        /* Improved readability for alerts */
+        .category-alert {
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-alert .alert-message {
+            color: #2c3e50;
+            font-weight: 600;
+            text-shadow: 0 0 1px rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger Menu Button -->
+    <div class="hamburger-menu">
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+    </div>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay"></div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle-container">
+        <input type="checkbox" id="theme-toggle" />
+        <label for="theme-toggle" class="theme-toggle-switch">
+            <span class="theme-toggle-slider">
+                <span class="theme-toggle-icon sun">🌞</span>
+                <span class="theme-toggle-icon moon">🌙</span>
+            </span>
+        </label>
+    </div>
+
+    <div class="layout-wrapper">
+        <!-- Left Navbar -->
+        <nav class="side-navbar">
+            <div class="user-welcome">
+                <div class="user-avatar">👤</div>
+                <div class="welcome-text">
+                    <p>Hi, <h3 id="sidebar-username">Buddy</h3></p>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link active"><span class="nav-icon">📊</span>Dashboard</a>
+                <a href="expense.html" class="nav-link"><span class="nav-icon">💰</span>Expenses</a>
+                <a href="notes.html" class="nav-link"><span class="nav-icon">📝</span>Notes</a>
+                <a href="reminders.html" class="nav-link"><span class="nav-icon">⏰</span>Reminders</a>
+                <a href="visuals-and-charts.html" class="nav-link"><span class="nav-icon">📈</span>Visuals & Charts</a>
+                <a href="settings.html" class="nav-link"><span class="nav-icon">⚙️</span>Settings</a>
+                <a href="about.html" class="nav-link"><span class="nav-icon">ℹ️</span>About</a>
+            </div>
+        </nav>
+
+        <!-- Main Container -->
+        <div class="main-container">
+            <div class="dashboard-container">
+                <!-- Top Navigation Bar -->
+                <nav class="top-nav">
+                    <span id="timestamp" style="color: #666; font-size: 16px; padding: 10px 20px;"></span>
+                </nav>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Feature Cards and Expense Summary Row -->
+                    <div class="content-wrapper" style="display: flex; gap: 30px; justify-content: space-between; width: 100%; align-items: stretch;">
+                        <!-- Feature Cards (Left) -->
+                        <div class="feature-cards" style="flex: 0 0 45%; width: 45%; display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: stretch;">
+                            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                                <a href="expense.html" class="feature-card expenses" style="padding: 48px 28px; min-height: 220px; border-radius: 24px; display: flex; align-items: center; gap: 24px; background: rgba(255,255,255,0.22); box-shadow: 0 4px 24px rgba(70,153,125,0.07);">
+                                    <div class="card-icon" style="padding: 0; background: none; min-width: 70px; display: flex; align-items: center; justify-content: center;">
+                                        <img src="https://img.icons8.com/color/96/000000/combo-chart--v2.png" alt="Expense" style="width:60px;height:60px;">
+                                    </div>
+                                    <div class="card-content">
+                                        <h2 style="font-size: 1.7em; font-weight: 700; margin-bottom: 6px; color: #22313f; letter-spacing: 0.1px; text-align: left;">Expense Management</h2>
+                                        <p style="font-size: 0.98em; color: #34495e; line-height: 1.4; font-weight: 400; text-align: left;">Track your expenses, split bills, and manage balances.</p>
+                                    </div>
+                                </a>
+                                <a href="notes.html" class="feature-card notes" style="padding: 48px 28px; min-height: 220px; border-radius: 24px; display: flex; align-items: center; gap: 24px; background: rgba(255,255,255,0.22); box-shadow: 0 4px 24px rgba(70,153,125,0.07); margin-top: 10px;">
+                                    <div class="card-icon" style="padding: 0; background: none; min-width: 70px; display: flex; align-items: center; justify-content: center;">
+                                        <img src="https://img.icons8.com/color/96/000000/note.png" alt="Notes" style="width:60px;height:60px;">
+                                    </div>
+                                    <div class="card-content">
+                                        <h2 style="font-size: 1.7em; font-weight: 700; margin-bottom: 6px; color: #22313f; letter-spacing: 0.1px; text-align: left;">Notes</h2>
+                                        <p style="font-size: 0.98em; color: #34495e; line-height: 1.4; font-weight: 400; text-align: left;">Capture and organize your thoughts effortlessly.</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Budget Insights (Right) -->
+                        <div class="budget-insights-box" style="flex: 0 0 55%; width: 55%; background: rgba(255,255,255,0.18); border-radius: 20px; box-shadow: 0 4px 24px rgba(70,153,125,0.07); padding: 22px 18px 18px 18px; margin-bottom: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: stretch; height: 100%;">
+                            <h2 style="font-size: 1.35em; font-weight: 700; text-align: center; margin-bottom: 6px; color: #22313f; letter-spacing: 0.2px; width: 100%;">Budget Insights</h2>
+                            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px; width: 100%;">
+                                <span style="display: inline-block; width: 8px; height: 8px; background: #b2f2e5; border-radius: 50%; margin: 0 2px;"></span>
+                                <span style="display: inline-block; width: 8px; height: 8px; background: #7fffd4; border-radius: 50%; margin: 0 2px;"></span>
+                                <span style="display: inline-block; width: 8px; height: 8px; background: #b2f2e5; border-radius: 50%; margin: 0 2px;"></span>
+                                <span style="display: inline-block; width: 8px; height: 8px; background: #b2f2e5; border-radius: 50%; margin: 0 2px;"></span>
+                            </div>
+                            <div style="font-size: 1.18em; font-weight: 700; color: #22313f; margin-bottom: 0; text-align: left; width: 100%;">Grocery</div>
+                            <div style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 0;">
+                                <div style="color:#6c7a89;font-size:1em;margin-bottom:10px;text-align:center; font-weight: 500;">Monthly Budget: ₹1,250</div>
+                                <div class="progress-ring-container" style="justify-content: center; align-items: center; margin: 0 0 10px 0; position: relative; width: 140px; height: 140px;">
+                                    <svg class="progress-ring" width="140" height="140" style="display: block;">
+                                        <circle class="progress-ring-circle-bg" stroke="#d2f5ea" stroke-width="14" fill="transparent" r="56" cx="70" cy="70"/>
+                                        <circle class="progress-ring-circle" stroke="#46997D" stroke-width="14" fill="transparent" r="56" cx="70" cy="70" stroke-dasharray="351.68" stroke-dashoffset="344.64"/>
+                                    </svg>
+                                    <span class="progress-text" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:1.2em;font-weight:400;color:#22313f;">2%</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                                <div style="background: #eaf6fb; border-radius: 12px; box-shadow: 2px 4px 0 #b2e6f2; padding: 12px 16px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.98em; font-weight: 400; color: #22313f; border-left: 4px solid #7fffd4; margin-bottom: 4px;">
+                                    <span style="font-size: 1.1em; margin-top: 2px;">🤖<br>💡</span>
+                                    <span>You've used 2% of your Grocery budget. You can spend about ₹94 this month and stay on track.</span>
+                                </div>
+                                <div style="background: #eaf6fb; border-radius: 12px; box-shadow: 2px 4px 0 #b2e6f2; padding: 12px 16px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.98em; font-weight: 400; color: #22313f; border-left: 4px solid #7fffd4;">
+                                    <span style="font-size: 1.1em; margin-top: 2px;">📊</span>
+                                    <span>Your spending for Grocery is within normal range. Keep monitoring to stay on track.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Inspirational Quote Section (Below both columns) -->
+                </div>
+                <div class="quote-container" style="margin-top: 40px;">
+                    <div class="quote-icon">💫</div>
+                    <div class="quote-text">
+                        <p>"Money comes and goes, but what you do with it shapes your journey."</p>
+                        <p class="quote-subtext">Track it, save it, and spend where it matters.</p>
+                    </div>
+                    <div class="quote-decoration">
+                        <span class="decoration-icon">💰</span>
+                        <span class="decoration-icon">📈</span>
+                        <span class="decoration-icon">🎯</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/navbar.js"></script>
+    <script>
+        // Update timestamp every second
+        function updateTimestamp() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = now.toLocaleDateString(undefined, options);
+            const timeStr = now.toLocaleTimeString();
+            document.getElementById('timestamp').textContent = `${dateStr} at ${timeStr}`;
+        }
+        setInterval(updateTimestamp, 1000);
+        updateTimestamp();
+    </script>
+</body>
+</html> 

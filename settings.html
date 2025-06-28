@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - FinNote</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hamburger Menu Button -->
+    <div class="hamburger-menu">
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+    </div>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay"></div>
+
+    <!-- Theme Toggle Switch -->
+    <div class="theme-toggle-container">
+        <input type="checkbox" id="theme-toggle" />
+        <label for="theme-toggle" class="theme-toggle-switch">
+            <span class="theme-toggle-slider">
+                <span class="theme-toggle-icon sun">🌞</span>
+                <span class="theme-toggle-icon moon">🌙</span>
+            </span>
+        </label>
+    </div>
+    <!-- End Theme Toggle Switch -->
+
+    <div class="layout-wrapper">
+        <!-- Left Navbar -->
+        <nav class="side-navbar">
+            <div class="user-welcome">
+                <div class="user-avatar">👤</div>
+                <div class="welcome-text">
+                    <p>Hi, <h3 id="sidebar-username">{{username}}</h3></p>
+            
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="expense.html" class="nav-link">
+                    <span class="nav-icon">💰</span>
+                    <span>Expenses</span>
+                </a>
+                <a href="notes.html" class="nav-link">
+                    <span class="nav-icon">📝</span>
+                    <span>Notes</span>
+                </a>
+                <a href="reminders.html" class="nav-link">
+                    <span class="nav-icon">⏰</span>
+                    <span>Reminders</span>
+                </a>
+                <a href="visuals-and-charts.html" class="nav-link">
+                    <span class="nav-icon">📈</span>
+                    <span>Visuals & Charts</span>
+                </a>
+                <a href="settings.html" class="nav-link active">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <a href="about.html" class="nav-link">
+                    <span class="nav-icon">ℹ️</span>
+                    <span>About</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Container -->
+        <div class="main-container">
+            <div class="settings-content">
+                <h1>Settings</h1>
+
+                <!-- Profile Settings -->
+                <div class="settings-section">
+                    <h2>Profile</h2>
+                    <div class="settings-card profile-settings">
+                        <div class="avatar-section">
+                            <div class="avatar-preview">👤</div>
+                            <button class="change-avatar-btn" id="changeAvatarBtn">Change Avatar</button>
+                        </div>
+                        <form class="profile-form" action="/update-profile" method="POST">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" name="username" value="{{user.username}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email (Cannot be changed)</label>
+                                <input type="email" id="email" name="email" value="{{user.email}}" disabled>
+                            </div>
+                            <button type="submit" class="save-btn">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Password Update -->
+                <section class="settings-section">
+                    <h2>Update Password</h2>
+                    <div class="settings-card">
+                        <form action="/update-password" method="POST">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" name="currentPassword" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" name="newPassword" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            </div>
+
+                            <button type="submit" class="save-btn">Update Password</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Notification Settings -->
+                <div class="settings-section">
+                    <h2>Notifications</h2>
+                    <div class="settings-card">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>Email Notifications</h3>
+                                <p>Receive updates via email</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" name="emailNotifications" {{#if user.emailNotifications}}checked{{/if}}>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>Push Notifications</h3>
+                                <p>Get instant alerts on your device</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" name="pushNotifications" {{#if user.pushNotifications}}checked{{/if}}>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logout Button -->
+                <div class="settings-section">
+                    <div class="settings-card logout-box">
+                        <button type="button" class="logout-btn" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup-message" style="display:none;position:fixed;top:30px;left:50%;transform:translateX(-50%);background:#3bb89c;color:#fff;padding:18px 36px;border-radius:16px;box-shadow:0 4px 24px rgba(64,224,208,0.18);font-size:1.15rem;z-index:9999;transition:opacity 0.3s;opacity:0;"></div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/navbar.js"></script>
+    <script>
+      // Simulate a logged-in user (replace with real data source as needed)
+      let user = {
+        username: 'Prabin Dumre',
+        email: 'prabindumre1670@gmail.com'
+      };
+      document.addEventListener('DOMContentLoaded', function() {
+        const usernameInput = document.getElementById('username');
+        const emailInput = document.getElementById('email');
+        // Use localStorage value if available
+        const settings = JSON.parse(localStorage.getItem('userSettings') || '{}');
+        if (usernameInput) usernameInput.value = settings.name || user.username;
+        if (emailInput) emailInput.value = user.email;
+
+        // Popup message function
+        function showPopup(message, duration = 3000) {
+          const popup = document.getElementById('popup-message');
+          popup.textContent = message;
+          popup.style.display = 'block';
+          popup.style.opacity = '1';
+          setTimeout(() => {
+            popup.style.opacity = '0';
+            setTimeout(() => { popup.style.display = 'none'; }, 300);
+          }, duration);
+        }
+
+        // Save Changes handler
+        const profileForm = document.querySelector('.profile-form');
+        if (profileForm) {
+          profileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Update user object and sidebar username
+            user.username = usernameInput.value;
+            // Update sidebar username everywhere and save to localStorage
+            if (window.updateSidebarUsername) {
+              window.updateSidebarUsername(user.username);
+            }
+            showPopup('Save changes successful', 3000);
+          });
+        }
+
+        // Change Avatar handler
+        const changeAvatarBtn = document.getElementById('changeAvatarBtn');
+        if (changeAvatarBtn) {
+          changeAvatarBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showPopup('This feature will be added soon', 5000);
+          });
+        }
+      });
+    </script>
+</body>
+</html>

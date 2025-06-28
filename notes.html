@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes - FinNote</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/notes.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hamburger Menu Button -->
+    <div class="hamburger-menu">
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+    </div>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay"></div>
+
+    <!-- Theme Toggle Switch -->
+    <div class="theme-toggle-container">
+        <input type="checkbox" id="theme-toggle" />
+        <label for="theme-toggle" class="theme-toggle-switch">
+            <span class="theme-toggle-slider">
+                <span class="theme-toggle-icon sun">🌞</span>
+                <span class="theme-toggle-icon moon">🌙</span>
+            </span>
+        </label>
+    </div>
+
+    <div class="layout-wrapper">
+        <!-- Left Navbar (Same as other pages) -->
+         <nav class="side-navbar">
+            <div class="user-welcome">
+                <div class="user-avatar">👤</div>
+                <div class="welcome-text">
+                    <p>Hi, <h3 id="sidebar-username">Buddy</h3></p>
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="expense.html" class="nav-link">
+                    <span class="nav-icon">💰</span>
+                    <span>Expenses</span>
+                </a>
+                <a href="notes.html" class="nav-link active">
+                    <span class="nav-icon">📝</span>
+                    <span>Notes</span>
+                </a>
+                <a href="reminders.html" class="nav-link">
+                    <span class="nav-icon">⏰</span>
+                    <span>Reminders</span>
+                </a>
+                <a href="visuals-and-charts.html" class="nav-link">
+                    <span class="nav-icon">📈</span>
+                    <span>Visuals & Charts</span>
+                </a>
+                <a href="settings.html" class="nav-link">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <a href="about.html" class="nav-link">
+                    <span class="nav-icon">ℹ️</span>
+                    <span>About</span>
+                </a>
+            </div>
+        </nav>
+        <!-- Main Container -->
+        <div class="main-container">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" id="searchNotes" placeholder="Search for notes">
+                <button class="search-icon">🔍</button>
+            </div>
+
+            <!-- Date Scroll -->
+            <div class="date-scroll">
+                <div class="date-container" id="dateContainer">
+                    <!-- Dates will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="notes-grid">
+                    <div class="no-notes">
+                        <p>No notes yet. Click the + button to create your first note!</p>
+                    </div>
+            </div>
+
+            <!-- Add Note Button -->
+            <button class="add-note-btn">+</button>
+
+            <!-- Note Type Selector (Initially Hidden) -->
+            <div class="note-type-selector" id="noteTypeSelector">
+                <button class="type-option" id="openTextNote">
+                    <span>📝</span>
+                    <label>Text</label>
+                </button>
+                <button class="type-option" id="openListNote">
+                    <span>📋</span>
+                    <label>List</label>
+                </button>
+                <button class="type-option" id="openImageNote">
+                    <span>🖼️</span>
+                    <label>Image</label>
+                </button>
+            </div>
+
+            <!-- Text Note Modal -->
+            <div class="modal" id="textNoteModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Add Text Note</h2>
+                        <button class="close-btn">&times;</button>
+                    </div>
+                    <form id="textNoteForm">
+                        <div class="form-group">
+                            <label for="textNoteType">Note Type</label>
+                            <select id="textNoteType" onchange="handleNoteTypeChange(this, 'textCustomType')" required>
+                                <option value="Important">Important</option>
+                                <option value="Lecture Notes">Lecture Notes</option>
+                                <option value="Grocery">Grocery</option>
+                                <option value="To-do List">To-do List</option>
+                                <option value="Shopping List">Shopping List</option>
+                                <option value="Routine">Routine</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <input type="text" id="textCustomType" placeholder="Enter custom note type" style="display: none; margin-top: 10px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="textNoteTitle">Title</label>
+                            <input type="text" id="textNoteTitle" placeholder="Enter note title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="textDescription">Description</label>
+                            <textarea id="textDescription" rows="6" placeholder="Enter your note here..." required></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn">Cancel</button>
+                            <button type="submit" class="save-btn">Save Note</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- List Note Modal -->
+            <div class="modal" id="listNoteModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Add List Note</h2>
+                        <button class="close-btn">&times;</button>
+                    </div>
+                    <form id="listNoteForm">
+                        <div class="form-group">
+                            <label for="listNoteType">Note Type</label>
+                            <select id="listNoteType" onchange="handleNoteTypeChange(this, 'listCustomType')" required>
+                                <option value="Important">Important</option>
+                                <option value="Lecture Notes">Lecture Notes</option>
+                                <option value="Grocery">Grocery</option>
+                                <option value="To-do List">To-do List</option>
+                                <option value="Shopping List">Shopping List</option>
+                                <option value="Routine">Routine</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <input type="text" id="listCustomType" placeholder="Enter custom note type" style="display: none; margin-top: 10px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="listNoteTitle">Title</label>
+                            <input type="text" id="listNoteTitle" placeholder="Enter note title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>List Style</label>
+                            <div class="list-style-options">
+                                <label>
+                                    <input type="radio" name="listStyle" value="bullet" checked>
+                                    Bullet List
+                                </label>
+                                <label>
+                                    <input type="radio" name="listStyle" value="number">
+                                    Number List
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div id="listItems">
+                                <div class="list-item">
+                                    <span class="list-marker">•</span>
+                                    <input type="text" class="item-text" placeholder="List item">
+                                    <button type="button" class="remove-item">×</button>
+                                </div>
+                            </div>
+                            <button type="button" class="add-list-item">+ Add item</button>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn">Cancel</button>
+                            <button type="submit" class="save-btn">Save Note</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Image Note Modal -->
+            <div class="modal" id="imageNoteModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Add Image Note</h2>
+                        <button class="close-btn">&times;</button>
+                    </div>
+                    <form id="imageNoteForm">
+                        <div class="form-group">
+                            <label for="imageNoteType">Note Type</label>
+                            <select id="imageNoteType" onchange="handleNoteTypeChange(this, 'imageCustomType')" required>
+                                <option value="Important">Important</option>
+                                <option value="Lecture Notes">Lecture Notes</option>
+                                <option value="Grocery">Grocery</option>
+                                <option value="To-do List">To-do List</option>
+                                <option value="Shopping List">Shopping List</option>
+                                <option value="Routine">Routine</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <input type="text" id="imageCustomType" placeholder="Enter custom note type" style="display: none; margin-top: 10px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="imageNoteTitle">Title</label>
+                            <input type="text" id="imageNoteTitle" placeholder="Enter note title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="imageUpload">Upload Image</label>
+                            <div class="image-upload-container">
+                                <input type="file" id="imageUpload" accept="image/*" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="imageDescription">Description</label>
+                            <textarea id="imageDescription" rows="4" placeholder="Add description for your image..."></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn">Cancel</button>
+                            <button type="submit" class="save-btn">Save Note</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/notes.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/navbar.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addNoteBtn = document.querySelector('.add-note-btn');
+        const noteTypeSelector = document.getElementById('noteTypeSelector');
+        const openTextNote = document.getElementById('openTextNote');
+        const openListNote = document.getElementById('openListNote');
+        const openImageNote = document.getElementById('openImageNote');
+        const textNoteModal = document.getElementById('textNoteModal');
+        const listNoteModal = document.getElementById('listNoteModal');
+        const imageNoteModal = document.getElementById('imageNoteModal');
+
+        addNoteBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            noteTypeSelector.classList.toggle('show');
+        });
+
+        // Hide the selector if clicking outside
+        document.addEventListener('click', function(e) {
+            if (!noteTypeSelector.contains(e.target) && e.target !== addNoteBtn) {
+                noteTypeSelector.classList.remove('show');
+            }
+        });
+
+        openTextNote.addEventListener('click', function(e) {
+            e.stopPropagation();
+            noteTypeSelector.classList.remove('show');
+            if (textNoteModal) textNoteModal.classList.add('show');
+        });
+        openListNote.addEventListener('click', function(e) {
+            e.stopPropagation();
+            noteTypeSelector.classList.remove('show');
+            if (listNoteModal) listNoteModal.classList.add('show');
+        });
+        openImageNote.addEventListener('click', function(e) {
+            e.stopPropagation();
+            noteTypeSelector.classList.remove('show');
+            if (imageNoteModal) imageNoteModal.classList.add('show');
+        });
+    });
+
+    let notes = JSON.parse(localStorage.getItem('notes') || '[]');
+    // Store default submit handlers
+    const defaultTextNoteSubmit = document.getElementById('textNoteForm').onsubmit;
+    const defaultListNoteSubmit = document.getElementById('listNoteForm').onsubmit;
+    const defaultImageNoteSubmit = document.getElementById('imageNoteForm').onsubmit;
+
+    // Render notes grid
+    function renderNotes() {
+        const notesGrid = document.querySelector('.notes-grid');
+        if (!notesGrid) return;
+        if (notes.length === 0) {
+            notesGrid.innerHTML = `<div class="no-notes"><p>No notes yet. Click the + button to create your first note!</p></div>`;
+            return;
+        }
+        // Pinned notes first
+        const sortedNotes = [...notes].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+        notesGrid.innerHTML = sortedNotes.map((note, idx) => `
+            <div class="note-card${note.pinned ? ' pinned' : ''}" data-idx="${idx}">
+                <div class="note-header">
+                    <div class="note-title"><strong>${note.title}</strong></div>
+                    <button class="note-menu-btn" title="Menu">&#8942;</button>
+                    <div class="note-menu">
+                        <button class="edit-note">Edit</button>
+                        <button class="pin-note">${note.pinned ? 'Unpin' : 'Pin'}</button>
+                        <button class="delete-note">Delete</button>
+                    </div>
+                </div>
+                <div class="note-divider"></div>
+                <div class="note-content">
+                    ${note.type === 'text' ? `<p>${note.content}</p>` : ''}
+                    ${note.type === 'list' ? `<ul>${note.content.map(item => `<li>${item}</li>`).join('')}</ul>` : ''}
+                    ${note.type === 'image' ? `<img src="${note.image}" alt="Note image" style="max-width:100%;border-radius:12px;"><p>${note.content}</p>` : ''}
+                </div>
+                ${note.isImportant ? `<div class="note-label">Important</div>` : ''}
+            </div>
+        `).join('');
+
+        // Menu open/close logic
+        document.querySelectorAll('.note-menu-btn').forEach((btn, i) => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.note-menu').forEach(m => m.classList.remove('show'));
+                btn.nextElementSibling.classList.toggle('show');
+            });
+        });
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.note-menu').forEach(m => m.classList.remove('show'));
+        });
+
+        // Edit, Pin, Delete logic
+        document.querySelectorAll('.note-card').forEach((card, i) => {
+            const idx = parseInt(card.getAttribute('data-idx'));
+            // Edit
+            card.querySelector('.edit-note').addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.note-menu').forEach(m => m.classList.remove('show'));
+                const note = notes[idx];
+                if (note.type === 'text') {
+                    document.getElementById('textNoteTitle').value = note.title;
+                    document.getElementById('textDescription').value = note.content;
+                    document.getElementById('textNoteType').value = note.isImportant ? 'Important' : 'Lecture Notes';
+                    document.getElementById('textNoteModal').classList.add('show');
+                    // On save, update note
+                    document.getElementById('textNoteForm').onsubmit = function(ev) {
+                        ev.preventDefault();
+                        note.title = document.getElementById('textNoteTitle').value;
+                        note.content = document.getElementById('textDescription').value;
+                        note.isImportant = document.getElementById('textNoteType').value === 'Important';
+                        localStorage.setItem('notes', JSON.stringify(notes));
+                        renderNotes();
+                        document.getElementById('textNoteModal').classList.remove('show');
+                        this.onsubmit = null;
+                        document.getElementById('textNoteForm').onsubmit = defaultTextNoteSubmit;
+                    };
+                } else if (note.type === 'list') {
+                    document.getElementById('listNoteTitle').value = note.title;
+                    document.getElementById('listNoteType').value = note.isImportant ? 'Important' : 'Lecture Notes';
+                    // Fill list items
+                    const listItems = document.getElementById('listItems');
+                    listItems.innerHTML = '';
+                    note.content.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'list-item';
+                        div.innerHTML = `<span class="list-marker">•</span><input type="text" class="item-text" value="${item}" placeholder="List item"><button type="button" class="remove-item">×</button>`;
+                        listItems.appendChild(div);
+                    });
+                    document.getElementById('listNoteModal').classList.add('show');
+                    document.getElementById('listNoteForm').onsubmit = function(ev) {
+                        ev.preventDefault();
+                        note.title = document.getElementById('listNoteTitle').value;
+                        note.isImportant = document.getElementById('listNoteType').value === 'Important';
+                        note.content = Array.from(document.querySelectorAll('#listItems .item-text')).map(input => input.value).filter(Boolean);
+                        localStorage.setItem('notes', JSON.stringify(notes));
+                        renderNotes();
+                        document.getElementById('listNoteModal').classList.remove('show');
+                        this.onsubmit = null;
+                        document.getElementById('listNoteForm').onsubmit = defaultListNoteSubmit;
+                        // Reset list items to one empty item
+                        document.getElementById('listItems').innerHTML = `<div class="list-item"><span class="list-marker">•</span><input type="text" class="item-text" placeholder="List item"><button type="button" class="remove-item">×</button></div>`;
+                    };
+                } else if (note.type === 'image') {
+                    document.getElementById('imageNoteTitle').value = note.title;
+                    document.getElementById('imageDescription').value = note.content;
+                    document.getElementById('imageNoteType').value = note.isImportant ? 'Important' : 'Lecture Notes';
+                    document.getElementById('imageNoteModal').classList.add('show');
+                    document.getElementById('imageNoteForm').onsubmit = function(ev) {
+                        ev.preventDefault();
+                        note.title = document.getElementById('imageNoteTitle').value;
+                        note.content = document.getElementById('imageDescription').value;
+                        // Only update image if a new file is selected
+                        const fileInput = document.getElementById('imageUpload');
+                        const file = fileInput.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(evt) {
+                                note.image = evt.target.result;
+                                note.isImportant = document.getElementById('imageNoteType').value === 'Important';
+                                localStorage.setItem('notes', JSON.stringify(notes));
+                                renderNotes();
+                                document.getElementById('imageNoteModal').classList.remove('show');
+                                document.getElementById('imageNoteForm').reset();
+                            };
+                            reader.readAsDataURL(file);
+                        } else {
+                            note.isImportant = document.getElementById('imageNoteType').value === 'Important';
+                            localStorage.setItem('notes', JSON.stringify(notes));
+                            renderNotes();
+                            document.getElementById('imageNoteModal').classList.remove('show');
+                            document.getElementById('imageNoteForm').reset();
+                        }
+                        this.onsubmit = null;
+                        document.getElementById('imageNoteForm').onsubmit = defaultImageNoteSubmit;
+                    };
+                }
+            });
+            // Pin/Unpin
+            card.querySelector('.pin-note').addEventListener('click', function(e) {
+                e.stopPropagation();
+                notes[idx].pinned = !notes[idx].pinned;
+                localStorage.setItem('notes', JSON.stringify(notes));
+                renderNotes();
+            });
+            // Delete
+            card.querySelector('.delete-note').addEventListener('click', function(e) {
+                e.stopPropagation();
+                notes.splice(idx, 1);
+                localStorage.setItem('notes', JSON.stringify(notes));
+                renderNotes();
+            });
+        });
+    }
+
+    // --- TEXT NOTE ---
+    document.getElementById('textNoteForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const title = document.getElementById('textNoteTitle').value;
+        const content = document.getElementById('textDescription').value;
+        const isImportant = document.getElementById('textNoteType').value === 'Important';
+        notes.push({ title, content, type: 'text', isImportant });
+        localStorage.setItem('notes', JSON.stringify(notes));
+        renderNotes();
+        document.getElementById('textNoteModal').classList.remove('show');
+        this.onsubmit = null;
+        document.getElementById('textNoteForm').onsubmit = defaultTextNoteSubmit;
+    });
+
+    // --- LIST NOTE ---
+    document.getElementById('listNoteForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const title = document.getElementById('listNoteTitle').value;
+        const isImportant = document.getElementById('listNoteType').value === 'Important';
+        // Get all list items
+        const items = Array.from(document.querySelectorAll('#listItems .item-text')).map(input => input.value).filter(Boolean);
+        notes.push({ title, content: items, type: 'list', isImportant });
+        localStorage.setItem('notes', JSON.stringify(notes));
+        renderNotes();
+        document.getElementById('listNoteModal').classList.remove('show');
+        this.onsubmit = null;
+        document.getElementById('listNoteForm').onsubmit = defaultListNoteSubmit;
+        // Reset list items to one empty item
+        document.getElementById('listItems').innerHTML = `
+            <div class="list-item">
+                <span class="list-marker">•</span>
+                <input type="text" class="item-text" placeholder="List item">
+                <button type="button" class="remove-item">×</button>
+            </div>
+        `;
+    });
+
+    // --- IMAGE NOTE ---
+    document.getElementById('imageNoteForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const title = document.getElementById('imageNoteTitle').value;
+        const content = document.getElementById('imageDescription').value;
+        const isImportant = document.getElementById('imageNoteType').value === 'Important';
+        const fileInput = document.getElementById('imageUpload');
+        const file = fileInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+            notes.push({ title, content, type: 'image', image: evt.target.result, isImportant });
+            localStorage.setItem('notes', JSON.stringify(notes));
+            renderNotes();
+            document.getElementById('imageNoteModal').classList.remove('show');
+            document.getElementById('imageNoteForm').reset();
+        };
+        reader.readAsDataURL(file);
+        this.onsubmit = null;
+        document.getElementById('imageNoteForm').onsubmit = defaultImageNoteSubmit;
+    });
+
+    // --- LIST NOTE: Add/Remove Items ---
+    document.querySelector('.add-list-item').addEventListener('click', function() {
+        const listItems = document.getElementById('listItems');
+        const div = document.createElement('div');
+        div.className = 'list-item';
+        div.innerHTML = `
+            <span class="list-marker">•</span>
+            <input type="text" class="item-text" placeholder="List item">
+            <button type="button" class="remove-item">×</button>
+        `;
+        listItems.appendChild(div);
+    });
+    document.getElementById('listItems').addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-item')) {
+            e.target.parentElement.remove();
+        }
+    });
+
+    // --- MODAL CLOSE BUTTONS ---
+    document.querySelectorAll('.modal .close-btn, .modal .cancel-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            btn.closest('.modal').classList.remove('show');
+        });
+    });
+
+    // --- INITIAL RENDER ---
+    document.addEventListener('DOMContentLoaded', renderNotes);
+    </script>
+</body>
+</html> 
