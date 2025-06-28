@@ -145,6 +145,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   - GitHub: [@PrabinDumre](https://github.com/PrabinDumre)
   - LinkedIn: [Prabin Dumre](https://linkedin.com/in/prabindumre)
   - Email: prabindumre@gmail.com
+ 
+## 👨‍💻 Co-Authors
+- **Somnath Bhattarai**
+- **Ranjan Kumar Rajbanshi**
 
 ## 🙏 Acknowledgments
 - Chart.js for beautiful data visualizations
