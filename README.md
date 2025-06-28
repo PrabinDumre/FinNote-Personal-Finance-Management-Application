@@ -153,8 +153,7 @@ For further collaboration, usage rights, or technical discussions, kindly contac
 - **Prabin Dumre**
   - LinkedIn: [Prabin Dumre](https://linkedin.com/in/prabindumre)
   - Email: prabindumre@gmail.com
- 
-## 👨‍💻 Co-Authors
+  - 
 - **Somnath Bhattarai**
   - LinkedIn: [Somnath](https://www.linkedin.com/in/somnath-bhattarai/?originalSubdomain=in)
   
