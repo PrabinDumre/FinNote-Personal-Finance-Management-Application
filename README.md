@@ -4,7 +4,7 @@
 FinNote is a modern, feature-rich personal finance management application that helps users track expenses, manage budgets, and organize financial notes. Built with HTML, CSS, and JavaScript, it offers a seamless experience for managing personal finances with an intuitive user interface.
 
 ## 🚀 Live Demo
-Visit [FinNote]() to try the application.
+Visit [FinNote](https://finnote.vercel.app/) to try the application.
 
 ## 📸 Screenshots
 
