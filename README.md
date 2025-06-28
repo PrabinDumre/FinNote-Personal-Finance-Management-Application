@@ -5,6 +5,8 @@ FinNote is a modern, feature-rich personal finance management application that h
 
 ## 🚀 Live Demo
 Visit [FinNote](https://finnote.vercel.app/) to try the application.
+## 🔍 Demo Purpose
+This is a demo version of the FinNote application, intended for users to explore and understand the core functionality and interface of the project. If you're interested in using this application in production, contributing to its development, or integrating it into your own work, please reach out to the developers.
 
 ## 📸 Screenshots
 
@@ -140,6 +142,8 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 ## 📝 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 📩 Contact the Developers
+For further collaboration, usage rights, or technical discussions, kindly contact:
 ## 👨‍💻 Author
 - **Prabin Dumre**
   - LinkedIn: [Prabin Dumre](https://linkedin.com/in/prabindumre)
