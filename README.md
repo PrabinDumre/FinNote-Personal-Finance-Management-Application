@@ -171,4 +171,4 @@ For further collaboration, usage rights, or technical discussions, kindly contac
 
 *Track your money, plan with ease, and build a future you'll love—because smart budgeting today means financial freedom tomorrow!* 💰✨
 
-**Made with ❤️ by Prabin Dumre**
+                                                     **Made with ❤️**
